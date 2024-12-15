@@ -2,7 +2,7 @@
 name: Feature Request
 about: feature 관련
 title: ''
-labels: ''
+labels: feat
 assignees: ''
 
 ---
