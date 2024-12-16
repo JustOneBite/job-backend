@@ -8,7 +8,7 @@ const app = express()
 
 // CORS 설정
 app.use(cors({
-    origin: 'http://localhost:3000', // 프론트엔드 URL
+    origin: ['http://localhost:3000', 'http://localhost:4000'], // 프론트엔드 URL
     methods: 'GET,POST', // 허용하는 HTTP 메서드
     allowedHeaders: 'Content-Type', // 허용하는 헤더
 }));
@@ -19,7 +19,7 @@ connectToDatabase().then((client) => {
     const db = client.db('forum');  // DB 선택
     console.log('DB 연결 성공');
     
-    app.listen(process.env.PORT || 8080, () => {
+    app.listen(process.env.PORT, () => {
       console.log('http://localhost:8080 에서 서버 실행중');
     });
   }).catch((err) => {
