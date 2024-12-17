@@ -2,8 +2,10 @@ require('dotenv').config();
 
 const express = require('express')
 const cors = require('cors');
+const testRoute = require('./routes/testRoute');
 const connectToDatabase = require('./database.js');
 const { MongoClient } = require('mongodb');
+
 const app = express()
 
 // CORS 설정
@@ -27,12 +29,11 @@ connectToDatabase().then((client) => {
   });
 
 
+
+
 // 루트 경로 설정
 app.get('/', (req, res) => {
   res.send('Welcome to JOB Project')
 })
 
-// api testing 
-app.get('/test',(req,res) => {
-  res.status(200).json({'data' : 'Test Success'})
-})
+app.use('/', testRoute);
