@@ -2,11 +2,13 @@ require('dotenv').config();
 
 const express = require('express')
 const cors = require('cors');
+const connectToDatabase = require('./database');
+
 const testRoute = require('./routes/testRoute');
-const connectToDatabase = require('./database.js');
-const { MongoClient } = require('mongodb');
+const studentRoutes = require("./routes/studentRoutes");
 
 const app = express()
+app.use(express.json());  
 
 // CORS 설정
 app.use(cors({
@@ -15,19 +17,13 @@ app.use(cors({
     allowedHeaders: 'Content-Type', // 허용하는 헤더
 }));
 
-
-// DB 연결 후 서버 실행
-connectToDatabase().then((client) => {
-    const db = client.db('forum');  // DB 선택
-    console.log('DB 연결 성공');
-    
-    app.listen(process.env.PORT, () => {
-      console.log('http://localhost:8080 에서 서버 실행중');
-    });
-  }).catch((err) => {
-    console.error('DB 연결 실패:', err);
-  });
-
+connectToDatabase().then(() => {
+      app.listen(process.env.PORT, () => {
+          console.log(`http://localhost:${process.env.PORT} 에서 서버 실행중`)
+      })
+}).catch((err) => {
+    console.error('페이지 실행 오류 발생', err)
+})
 
 
 
@@ -37,3 +33,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/', testRoute);
+
+app.use("/student", studentRoutes);
+
+module.exports = app;
