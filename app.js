@@ -9,6 +9,9 @@ const connectToDatabase = require('./database')
 const testRoute = require('./routes/testRoute')
 const studentRoutes = require("./routes/studentRoutes")
 const teacherRoutes = require("./routes/teacherRoutes")
+const mainStudyRoutes = require("./routes/mainStudyRoutes")
+
+
 
 const app = express()
 app.use(express.json())
@@ -56,5 +59,7 @@ app.use('/', testRoute)
 app.use("/student", studentRoutes)
 
 app.use("/teacher", teacherRoutes)
+
+app.use("/mainStudy", mainStudyRoutes)
 
 module.exports = app
